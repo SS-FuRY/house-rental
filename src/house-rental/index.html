@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>House Rental Application</title>
+  <style>
+    /* CSS styling goes here */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+    footer {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      position: relative;
+    }
+    h1 {
+      text-align: center;
+    }
+    .sign-in-container {
+      text-align: right;
+    }
+    .sign-in-button {
+      margin-left: 10px;
+    }
+    .tab {
+      overflow: hidden;
+      border-bottom: 1px solid #ccc;
+      background-color: #f1f1f1;
+      margin-bottom: 20px;
+    }
+    .tab button {
+      background-color: inherit;
+      float: left;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 14px 16px;
+      transition: background-color 0.3s;
+    }
+    .tab button:hover {
+      background-color: #ddd;
+    }
+    .tab button.active {
+      background-color: #ccc;
+    }
+    .tabcontent {
+      display: none;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-top: none;
+    }
+    .search-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .search-bar input[type="text"] {
+      width: 300px;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .search-bar button {
+      padding: 8px 20px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+    .house-list {
+      list-style: none;
+      padding: 0;
+    }
+    .house-list-item {
+      margin-bottom: 10px;
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+    .lease-form {
+      margin-top: 20px;
+    }
+    .lease-form input[type="text"],
+    .lease-form input[type="email"],
+    .lease-form input[type="tel"],
+    .lease-form input[type="number"],
+    .lease-form textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+    .lease-form select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+    .lease-form button {
+      padding: 8px 20px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+  <script>
+    // JavaScript logic goes here
+    function openTab(tabName) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(tabName).style.display = "block";
+      event.currentTarget.className += " active";
+    }
+
+    function searchHouses() {
+      var searchInput = document.getElementById("search").value.toLowerCase();
+      var houseItems = document.getElementsByClassName("house-list-item");
+      for (var i = 0; i < houseItems.length; i++) {
+        var houseState = houseItems[i].getElementsByClassName("house-state")[0];
+        var houseCountry = houseItems[i].getElementsByClassName("house-country")[0];
+        var houseTitle = houseItems[i].getElementsByClassName("house-title")[0];
+        var houseEmail = houseItems[i].getElementsByClassName("house-email")[0];
+        var housePhone = houseItems[i].getElementsByClassName("house-phone")[0];
+        var houseRooms = houseItems[i].getElementsByClassName("house-rooms")[0];
+        var houseTenant = houseItems[i].getElementsByClassName("house-tenant")[0];
+        var houseZip = houseItems[i].getElementsByClassName("house-zip")[0];
+
+        if (
+          houseState.innerHTML.toLowerCase().indexOf(searchInput) > -1 ||
+          houseCountry.innerHTML.toLowerCase().indexOf(searchInput) > -1 ||
+          houseZip.innerHTML.toLowerCase().indexOf(searchInput) > -1
+        ) {
+          houseItems[i].style.display = "";
+        } else {
+          houseItems[i].style.display = "none";
+        }
+      }
+    }
+
+    function saveLeasedHouse() {
+      var name = document.getElementById("name").value;
+      var email = document.getElementById("email").value;
+      var phone = document.getElementById("phone").value;
+      var message = document.getElementById("message").value;
+      var address = document.getElementById("address").value;
+      var state = document.getElementById("state").value;
+      var country = document.getElementById("country").value;
+      var zip = document.getElementById("zip").value;
+      var rooms = document.getElementById("rooms").value;
+      var rent = document.getElementById("rent").value;
+
+      var leaseForm = document.getElementById("lease-form");
+      var houseList = document.getElementById("house-list");
+
+      var houseItem = document.createElement("li");
+      houseItem.classList.add("house-list-item");
+
+      var houseTitle = document.createElement("h3");
+      houseTitle.classList.add("house-title");
+      houseTitle.innerHTML = state + ", " + country;
+
+      var houseDetails = document.createElement("div");
+      houseDetails.innerHTML = 
+        "<label>Name: </label>" + name + "<br>" +
+        "<label>Email: </label>" + email + "<br>" +
+        "<label>Phone: </label>" + phone + "<br>" +
+        "<label>Message: </label>" + message + "<br>" +
+        "<label>Address: </label>" + address + "<br>" +
+        "<label>State: </label>" + state + "<br>" +
+        "<label>Country: </label>" + country + "<br>" +
+        "<label>Zip Code: </label>" + zip + "<br>" +
+        "<label>Number of Rooms: </label>" + rooms + "<br>" +
+        "<label>Rent: </label>$" + rent + "/month";
+
+      houseItem.appendChild(houseTitle);
+      houseItem.appendChild(houseDetails);
+      houseList.appendChild(houseItem);
+
+      leaseForm.reset();
+    }
+  </script>
+</head>
+<body>
+  <header>
+    <h1>House Rental Application</h1>
+  </header>
+<body>
+    <div class="sign-in-container">
+      <input type="text" id="username" placeholder="Username">
+      <input type="password" id="password" placeholder="Password">
+      <button class="sign-in-button">Sign In</button>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="tab">
+      <button class="tablinks" onclick="openTab('LeaseHouse')">Lease House</button>
+      <button class="tablinks" onclick="openTab('FindHouse')">Find House</button>
+    </div>
+
+    <!-- Lease House Tab -->
+    <div id="LeaseHouse" class="tabcontent">
+      <h2>Lease House</h2>
+      <form id="lease-form" class="lease-form" onsubmit="event.preventDefault(); saveLeasedHouse();">
+        <input type="text" id="name" placeholder="Your Name" required>
+        <input type="email" id="email" placeholder="Your Email" required>
+        <input type="tel" id="phone" placeholder="Your Phone Number" required>
+        <textarea id="message" placeholder="Message"></textarea>
+        <input type="text" id="address" placeholder="House Address" required>
+        <input type="text" id="state" placeholder="State" required>
+        <input type="text" id="country" placeholder="Country" required>
+        <input type="text" id="zip" placeholder="Zip Code" required>
+        <input type="number" id="rooms" placeholder="Number of Rooms" min="1" required>
+        <input type="range" id="rent" min="500" max="10000" step="50" value="1500">
+        <output for="rent" id="rent-value">$1500/month</output>
+        <button type="submit">Save</button>
+      </form>
+    </div>
+
+    <!-- Find House Tab -->
+    <div id="FindHouse" class="tabcontent" style="display: block;">
+      <h2>Find House</h2>
+      <div class="search-bar">
+        <input type="text" id="search" placeholder="Enter state or country">
+        <button type="button" onclick="searchHouses()">Search</button>
+      </div>
+      <ul id="house-list" class="house-list">
+        <li class="house-list-item">
+          <h3 class="house-title">City Center, United States</h3>
+          <p class="house-state">City Center</p>
+          <p class="house-country">United States</p>
+          <p class="house-email">test1@example.com</p>
+          <p class="house-phone">+1 (123) 456-7890</p>
+          <p class="house-rooms">3 rooms</p>
+          <p class="house-zip">12345</p>
+          <p>Rent: $2000/month</p>
+        </li>
+        <li class="house-list-item">
+          <h3 class="house-title">Lakefront Cottage, Canada</h3>
+          <p class="house-state">Ontario</p>
+          <p class="house-country">Canada</p>
+          <p class="house-email">test2@example.com</p>
+          <p class="house-phone">+1 (234) 567-8901</p>
+          <p class="house-rooms">2 rooms</p>
+          <p class="house-zip">56789</p>
+          <p>Rent: $1500/month</p>
+        </li>
+        <li class="house-list-item">
+          <h3 class="house-title">Suburban Villa, United States</h3>
+          <p class="house-state">California</p>
+          <p class="house-country">United States</p>
+          <p class="house-email">test3@example.com</p>
+          <p class="house-phone">+1 (345) 678-9012</p>
+          <p class="house-rooms">4 rooms</p>
+          <p class="house-zip">90123</p>
+          <p>Rent: $3000/month</p>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+  <footer>
+    CQUPT Graduation Thesis
+  </footer>
+  <script>
+    // Slider functionality
+    var rentSlider = document.getElementById("rent");
+    var rentOutput = document.getElementById("rent-value");
+    rentOutput.innerHTML = "$" + rentSlider.value + "/month";
+
+    rentSlider.oninput = function() {
+      rentOutput.innerHTML = "$" + this.value + "/month";
+    };
+  </script>
+</body>
+</html>
