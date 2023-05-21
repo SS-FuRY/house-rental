@@ -6,6 +6,20 @@
     /* CSS styling goes here */
     body {
       font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+    }
+    footer {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
     }
     .container {
       max-width: 800px;
@@ -17,11 +31,7 @@
       text-align: center;
     }
     .sign-in-container {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      display: flex;
-      align-items: center;
+      text-align: right;
     }
     .sign-in-button {
       margin-left: 10px;
@@ -67,7 +77,7 @@
     }
     .search-bar button {
       padding: 8px 20px;
-      background-color: #820202;
+      background-color: #4CAF50;
       color: #fff;
       border: none;
       border-radius: 4px;
@@ -198,8 +208,10 @@
   </script>
 </head>
 <body>
-  <div class="container">
+  <header>
     <h1>House Rental Application</h1>
+  </header>
+<body>
     <div class="sign-in-container">
       <input type="text" id="username" placeholder="Username">
       <input type="password" id="password" placeholder="Password">
@@ -273,6 +285,9 @@
     </div>
 
   </div>
+  <footer>
+    CQUPT Graduation Thesis
+  </footer>
   <script>
     // Slider functionality
     var rentSlider = document.getElementById("rent");
